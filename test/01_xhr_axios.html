@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>使用axios发ajax请求</title>
+</head>
+<body>
+  <button onclick="testGet()">发送GET请求</button><br>
+  <button onclick="testPost()">发送POST请求</button><br>
+  <button onclick="testPut()">发送PUT请求</button><br>
+  <button onclick="testDelete()">发送Delete请求</button><br>
+
+  <script src="https://cdn.bootcss.com/axios/0.19.2/axios.js"></script>
+  <script>
+    //第一个btn   get请求     读取数据
+    function testGet() {
+      axios({
+        url:'http://localhost:3000/posts',
+        method:'get',
+        params:{
+          id:5,
+          title:'XXX'
+        }
+      })
+      //参数正确,返回正确的值
+        .then(responsr=>{
+          console.log(response.data)
+        })
+      //参数错误,返回错误的值
+        .catch(error=>{
+          console.log('请求出错',error.message)
+        })
+
+      
+    }
+    //第二个btn    post请求    添加数据
+    function testPost() {
+      axios({
+        url:'http://localhost:3000/posts',
+        method:'post',
+        data:{//指定请求对象
+          title:'title111',
+          ccc:'authorcccc111'
+        }
+      })
+      //正确的返回值
+      .then(response=>{
+        console.log(response.data)
+      })//失败的返回值
+      .catch(error=>{
+        console.log('请求出错',error.message)
+      })
+    }
+
+    //第三个btn   Put请求    修改数据
+    function  testPut() {
+      axios({
+        url:'http://localhost:3000/posts/5',
+        method:'put',
+        data:{//指定请求参数的对象
+          title:'title222',
+          author:'author222'
+        }
+      })//正确的返回值
+      .then(response=>{
+        console.log(response.data)
+      })//错误的返回值
+      .catch(error=>{
+        console.log('请求错误',error.message)
+      })
+    }
+
+
+    //第三个btn    Delete请求     删除数据
+    function testDelete() {
+      axios({
+        url:'http://localhost:3000/posts/8',
+        method:'delete',
+        
+      })
+      .then(response=>{
+        console.log(response.data)
+      })
+      .catch(error=>{
+        console.log('请求出错',error,message)
+      })
+    }
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>axios基本使用</title>
+</head>
+<body>
+  
+    <div>
+      <button onclick="testGet()">GET请求</button>
+      <button onclick="testPost()">POST请求</button>
+      <button onclick="testPut()">PUT请求</button>
+      <button onclick="testDelete()">DELETE请求</button>
+    </div>
+    <script src="https://cdn.bootcss.com/axios/0.19.2/axios.js"></script>
+    <script>
+      //指定默认配置
+      
+      axios.defaults.baseURL='http://localhost:3000'//基础路径
+      //get请求
+      function testGet() {
+        //第一种方法
+        // axios({
+        //   url:'/posts',
+        //   method:'get',
+        //   params:{
+        //     id:3
+        //   }
+        // }).then(response=>{
+        //   console.log(response.data)
+        // }).catch(error=>{
+        //   console.log('请求出错',error.message)
+        // })
+        // 第二种方法
+        axios.get('/posts',{
+         params:{
+           id:3
+         }
+        }).then(response=>{
+          console.log(response.data)
+        }).catch(error=>{
+          console.log('请求出错',error.message)
+        })
+      }
+     //post请求
+      function testPost() {
+        // axios({
+        //   url:'/posts',
+        //   method:'post',
+        //   data:{
+        //     title:'title999',
+        //     author:'author999'
+        //   }
+        // }).then(response=>{
+        //   console.log(response.data)
+        // }).catch(error=>{
+        //   console.log('请求出错',error.message)
+        // })
+        axios.post('/posts',{
+          title:'title999',
+          author:'author999'
+        }).then(response=>{
+          console.log(response.data)
+        }).catch(error=>{
+          console.log('请求出错',error.merrage)
+        })
+       
+      }
+      //put请求
+    function testPut() {
+      // axios({
+      //   url:'posts/1',
+      //   method:'put',
+      //   data:{
+      //     title:'title888',
+      //     author:'author888'
+      //   }
+      // }).then(response=>{
+      //   console.log(response.data)
+      // }).catch(error=>{
+      //   console.log('请求出错',error.message)
+      // })
+      axios.put('/posts/1',{
+        title:'999',
+        author:'999'
+      }).then(response=>{
+        console.log(response.data)
+      }).catch(error=>{
+        console.log('请求出错',error.message)
+      })
+    }
+    //delete请求
+    function testDelete() {
+      // axios({
+      //   url:'posts/1',
+      //   method:'delete'
+      // }).then(response=>{
+      //   console.log(response.data)
+      // }).catch(error=>{
+      //   console.log('请求出错',error.message)
+      // })
+      axios.delete('/posts/6').then(response=>{
+        console.log(response.data)
+      }).catch(error=>{
+        console.log('请求出错',error.message)
+      })
+
+    }
+    </script>
+</body>
+</html>

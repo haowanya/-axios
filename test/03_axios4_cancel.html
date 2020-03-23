@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>取消请求</title>
+</head>
+<body>
+  <button onclick="getProducts1()">获取商品列表1</button><br>
+  <button onclick="getProducts2()">获取商品列表2</button><br>
+  <button onclick="cancelReq()">取消请求</button><br>
+
+  <script src="https://cdn.bootcss.com/axios/0.19.0/axios.js"></script>
+  <script>
+    // 1.配置cancelToken对象,指定用于接收取消请求函数的回调函数
+    // 2.将接收到cance函数(用于取消当前即将发出的请求)保存起来
+    // 3.在请求结束前,通过调用保存的cancel函数取消未完成的请求
+    // 4.在请求完成回调中,将cancel函数重置
+
+    axios.defaults.baseURL='http://localhost:4000'
+    let  axiosCancel
+
+    //获取商品1
+    function getProducts1() {
+      axios.get('/products1',{
+        cancelToken:new axios.CancelToken((cancel)=>{//在真正发请求前立即调用
+          axiosCancel=cancel
+        })
+      }).then((response)=>{//在请求完成后,重置axiosCancel 
+        axiosCancel=null
+        console.log('/products1',response.data)
+      }).catch(error=>{
+        axiosCancel=null
+        console.log('/products1 error',error.message)
+      })
+    }
+
+    //获取商品2
+    function getProducts2(params) {
+      axios.get('/products2',{
+        cancelToken:new axios.CancelToken((cancel)=>{
+          axiosCancel=cancel
+        })
+      }).then((response)=>{
+        console.log('/products2',response.data)
+      }).catch((error)=>{
+        console.log('/products2',error.message)
+      })
+    }
+
+
+    //取消请求
+    function cancelReq() {
+      if (typeof axiosCancel==='function') {
+        console.log('取消请求')
+        axiosCancel('强制取消请求')
+      }else{
+        console.log('没有需要取消的请求')
+      }
+    }
+
+  </script>
+</body>
+</html>
